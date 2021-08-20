@@ -1,0 +1,4 @@
+enum Operator {
+  Plus,
+  Minus,
+}

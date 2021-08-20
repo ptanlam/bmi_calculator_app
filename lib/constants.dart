@@ -5,9 +5,34 @@ const kLabelTextStyle = TextStyle(
   color: Color(0xFF8D8E98),
 );
 
+const kBodyTextStyle = TextStyle(
+  fontSize: 20.0,
+);
+
+const kResultTextStyle = TextStyle(
+  fontSize: 22.0,
+  color: Color(0xFF24D876),
+  fontWeight: FontWeight.w800,
+);
+
+const kLargeTextStyle = TextStyle(
+  fontSize: 25.0,
+  fontWeight: FontWeight.w900,
+);
+
+const kExtraLargeTextStyle = TextStyle(
+  fontSize: 45.0,
+  fontWeight: FontWeight.w500,
+);
+
 const kNumberTextStyle = TextStyle(
   fontSize: 50.0,
   fontWeight: FontWeight.w900,
+);
+
+const kNumberLargeTextStyle = TextStyle(
+  fontSize: 100.0,
+  fontWeight: FontWeight.w700,
 );
 
 const kMinHeight = 120.0;

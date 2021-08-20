@@ -1,21 +1,28 @@
+import 'package:bmi_calculator/bmi_calculator.dart';
 import 'package:bmi_calculator/components/app_card.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
 import 'package:bmi_calculator/components/icon_content.dart';
+import 'package:bmi_calculator/components/label_action_content.dart';
 import 'package:bmi_calculator/gender.dart';
+import 'package:bmi_calculator/operator.dart';
+import 'package:bmi_calculator/screens/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constants.dart';
 
-class InputPage extends StatefulWidget {
-  InputPage({Key? key}) : super(key: key);
+class InputScreen extends StatefulWidget {
+  InputScreen({Key? key}) : super(key: key);
 
   @override
-  _InputPageState createState() => _InputPageState();
+  _InputScreenState createState() => _InputScreenState();
 }
 
-class _InputPageState extends State<InputPage> {
+class _InputScreenState extends State<InputScreen> {
   Gender? selectedGender;
   double height = 180.0;
+  double weight = 60.0;
+  int age = 20;
 
   Color toggleMaleCardColor() {
     return selectedGender == Gender.Male
@@ -27,6 +34,36 @@ class _InputPageState extends State<InputPage> {
     return selectedGender == Gender.Female
         ? kActiveCardColor
         : kInactiveCardColor;
+  }
+
+  void manipulateWeight(Operator operator) {
+    switch (operator) {
+      case Operator.Plus:
+        setState(() {
+          weight++;
+        });
+        break;
+      case Operator.Minus:
+        setState(() {
+          weight--;
+        });
+        break;
+    }
+  }
+
+  void manipulateAge(Operator operator) {
+    switch (operator) {
+      case Operator.Plus:
+        setState(() {
+          age++;
+        });
+        break;
+      case Operator.Minus:
+        setState(() {
+          age--;
+        });
+        break;
+    }
   }
 
   @override
@@ -134,15 +171,55 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: AppCard(
                     color: Color(0xFF1D1E33),
+                    child: LabelActionContent(
+                      label: 'Weight',
+                      value: '$weight',
+                      incrementAction: () {
+                        manipulateWeight(Operator.Plus);
+                      },
+                      decrementAction: () {
+                        manipulateWeight(Operator.Minus);
+                      },
+                    ),
                   ),
                 ),
                 Expanded(
                   child: AppCard(
                     color: Color(0xFF1D1E33),
+                    child: LabelActionContent(
+                      label: 'Age',
+                      value: '$age',
+                      incrementAction: () {
+                        manipulateAge(Operator.Plus);
+                      },
+                      decrementAction: () {
+                        manipulateAge(Operator.Minus);
+                      },
+                    ),
                   ),
                 ),
               ],
             ),
+          ),
+          BottomButton(
+            label: 'RE-CALCULATE',
+            onPressed: () {
+              var bmiCalculator = BMICalculator(
+                height: height,
+                weight: weight,
+              );
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultScreen(
+                    bmiResult: bmiCalculator.calculte(),
+                    resultText: bmiCalculator.getResultText(),
+                    interpretation: bmiCalculator.getInterpretation(),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
